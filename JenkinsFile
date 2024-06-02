@@ -1,0 +1,90 @@
+pipeline {
+    agent any
+
+    environment {
+        DIRECTORY_PATH = 'C:\\Users\\joyal\\Documents\\Jinkins'
+        TESTING_ENVIRONMENT = 'staging'
+        PRODUCTION_ENVIRONMENT = 'JP'
+        EMAIL_RECIPIENT = 'joyalpoulose0@gmail.com'
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    echo "Building the code using Maven."
+                    // Simulate build step
+                }
+            }
+        }
+        stage('Unit and Integration Tests') {
+            steps {
+                script {
+                    echo "Running unit tests using JUnit."
+                    echo "Running integration tests using Selenium."
+                    // Simulate testing steps
+                }
+                post {
+                    always {
+                        emailext(
+                            to: "${env.EMAIL_RECIPIENT}",
+                            subject: "Unit and Integration Tests Results",
+                            body: "The Unit and Integration Tests stage has completed.",
+                            attachLog: true
+                        )
+                    }
+                }
+            }
+        }
+        stage('Code Analysis') {
+            steps {
+                script {
+                    echo "Analyzing code quality using SonarQube."
+                    // Simulate code analysis step
+                }
+            }
+        }
+        stage('Security Scan') {
+            steps {
+                script {
+                    echo "Performing security scan using OWASP Dependency-Check."
+                    // Simulate security scan step
+                }
+                post {
+                    always {
+                        emailext(
+                            to: "${env.EMAIL_RECIPIENT}",
+                            subject: "Security Scan Results",
+                            body: "The Security Scan stage has completed.",
+                            attachLog: true
+                        )
+                    }
+                }
+            }
+        }
+        stage('Deploy to Staging') {
+            steps {
+                script {
+                    echo "Deploying application to staging environment."
+                    // Simulate deployment to staging
+                }
+            }
+        }
+        stage('Integration Tests on Staging') {
+            steps {
+                script {
+                    echo "Running integration tests on staging environment using Selenium."
+                    // Simulate integration tests on staging
+                }
+            }
+        }
+        stage('Deploy to Production') {
+            steps {
+                script {
+                    echo "Deploying application to production environment."
+                    // Simulate deployment to production
+                }
+            }
+        }
+    }
+}
